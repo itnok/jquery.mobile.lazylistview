@@ -1,15 +1,28 @@
+/*
+	--------------------------------
+	Lazy ListView for jQuery Mobile
+	--------------------------------
+	+ https://github.com/itnok/jquery.mobile.lazylistview
+	+ version 0.1
+	+ Copyright 2012 Simone Conti
+	+ Licensed under the MIT license
+	
+	+ Documentation: http://www.berta8.com/dev/jquery-mobile-lazylistview
+	
+*/
 ( function( $ ) {
-	/**
-	 *  Namespace: the namespace the plugin is located under (eg .mobile)
-	 *  pluginName: the name of the plugin (eg .listview)
-	 */
+	//	
+	//	Namespace: the namespace the plugin is located under (eg .mobile)
+	//	pluginName: the name of the plugin (eg .listview)
+	//	
 
 	var extensionOptions = {
 
-		 lazy     : false,
-		 indolence:  0.2,
-		 lazyurl  : '',
-		 lazychunk: 20
+		 lazy       : false,
+		 indolence  :  0.2,
+		 lazyurl    : '',
+		 lazychunk  : 20,
+		 lazyspinner: '<div data-theme="a" class="ui-lazyspinner"><ul data-role="listview" data-divider-theme="a"><li data-role="list-divider" /></li></ul></div>'
     };
 
     $.extend( true, $.mobile.listview.prototype.options, extensionOptions );
@@ -38,6 +51,9 @@
 	        	_selector = 'ul:first,ol:first';
         	}
 
+			$self.parent().append( _this.options.lazyspinner );
+			$self.parent().find( '.ui-lazyspinner' ).find( 'ul,ol' ).listview();
+			
 			$self.data(
     			'lazyLoader',
     			$.ajax( {
@@ -50,6 +66,8 @@
     				dataType: 'html',
     				success : function( data, status, jqXHR ) {
 	    				
+	    				$self.parent().find( '.ui-lazyspinner' ).remove();
+
 	    				var rscript      = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
 	    					_htmlContent = $( '<div>' )
 							//

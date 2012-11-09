@@ -1,0 +1,6 @@
+.ui-lazyspinner li.ui-li-divider {
+	background-image   : url( https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/images/ajax-loader.gif );
+	background-repeat  : no-repeat;
+	background-position: center;
+	height             : 50px;
+}
